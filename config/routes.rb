@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
-  resource :git, only: [:show], controller: 'git'
-  resource :controllr, only: [:show], controller: 'controllr'
+  resource :code, only: [:show], controller: 'code'
+  resource :staff, only: [:show], controller: 'staff'
+  resource :salary, only: [:show], controller: 'salary'
 end

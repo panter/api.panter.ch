@@ -21,8 +21,8 @@ class ControllrFetcher
     employees = controllr.employee_count
     contractors = controllr.contractor_count
 
-    DataStore.set('employees', { current: employees })
-    DataStore.set('contractors', { current: contractors })
+    DataStore.set('employees', count: employees)
+    DataStore.set('contractors', count: contractors)
   end
 
   def performance
@@ -31,16 +31,22 @@ class ControllrFetcher
     previous_performance = controllr.performance(previous_month.month, previous_month.year)
     current_performance = controllr.performance(current_month.month, current_month.year)
 
-    DataStore.set('salary-performance', { current: current_performance, last: previous_performance })
+    DataStore.set(
+      'performance',
+      {
+        :'last-month' => current_performance,
+        :'second-to-last-month' => previous_performance
+      }
+    )
   end
 
   def working_hours
     hours_worked = controllr.hours_worked(Date.today.month, Date.today.year)
-    DataStore.set('hours-worked', { current: hours_worked })
+    DataStore.set('hours-worked', :'current-month' => hours_worked)
   end
 
   def salaries
-    years_salaries = YAML.load_file('config/salaries.yml')
+    years_salaries = YAML.load_file(Rails.root.join('config/salaries.yml'))
 
     to_month = Date.today.prev_month.prev_month
     # get the first day of the month to be able to properly iterate
@@ -50,23 +56,22 @@ class ControllrFetcher
     # select the first day only, otherwise the iteration includes every day
     months = (from_month..to_month).select { |month| month.day == 1 }
 
-    points = months.map.with_index do |month, index|
+    salaries = months.map do |month|
       salary, workload = years_salaries[month.year][month.month]
-
       {
-        # it seems that somehow x needs required to be in seconds
-        x: index + 1,
-        y: salary,
-        moreinfo_value: workload
+        month: month.month,
+        year: month.year,
+        salary: salary,
+        workload: workload
       }
     end
 
-    DataStore.set('salary-graph', points: points)
+    DataStore.set('salaries', :'one-year-back' => salaries)
   end
 
   def average_age
     average_age = controllr.average_age
-    DataStore.set('average-age', { current: average_age })
+    DataStore.set('age', average: average_age)
   end
 
   def commute_distances
@@ -81,14 +86,23 @@ class ControllrFetcher
       end
     end
 
-    DataStore.set('commute-distances', {
-      value1: "#{durations.first} / #{distances.first}km",
-      value2: "#{durations.last} / #{distances.last}km"
-    })
+    DataStore.set(
+      'commute-distances',
+      {
+        shortest: {
+          duration: durations.first,
+          distance: "#{distances.first}km"
+        },
+        longest: {
+          duration: durations.last,
+          distance: "#{distances.last}km"
+        }
+      }
+    )
   end
 
   def children_per_employee
     children_per_employee = controllr.children_per_employee
-    DataStore.set('children-per-employee', { current: children_per_employee });
+    DataStore.set('children-per-employee', count: children_per_employee);
   end
 end
