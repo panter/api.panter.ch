@@ -1,8 +1,8 @@
-class SalaryController < ApplicationController
-  def show
-    render json: {
-      :'performance' => DataStore.get('performance'),
-      :'salaries' => DataStore.get('salaries')
-    }
+class SalaryController < ApiController
+  def attributes
+    [
+      :'performance',
+      :'salaries'
+    ]
   end
 end

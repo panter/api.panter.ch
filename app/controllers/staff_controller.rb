@@ -1,12 +1,12 @@
-class StaffController < ApplicationController
-  def show
-    render json: {
-      :'employees' => DataStore.get('employees'),
-      :'contractors' => DataStore.get('contractors'),
-      :'hours-worked' => DataStore.get('hours-worked'),
-      :'age' => DataStore.get('age'),
-      :'commute-distances' => DataStore.get('commute-distances'),
-      :'children-per-employee' => DataStore.get('children-per-employee')
-    }
+class StaffController < ApiController
+  def attributes
+    [
+      :'employees',
+      :'contractors',
+      :'hours-worked',
+      :'age',
+      :'commute-distances',
+      :'children-per-employee',
+    ]
   end
 end
