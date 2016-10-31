@@ -38,15 +38,38 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.4.0)
     arel (7.1.4)
     builder (3.2.2)
-    byebug (9.0.6)
+    charlock_holmes (0.7.3)
+    chronic (0.10.2)
+    coderay (1.1.1)
     concurrent-ruby (1.0.2)
+    dotenv (1.0.2)
+    dotenv-deployment (0.3.0)
+      dotenv (~> 1.0)
     erubis (2.7.0)
+    escape_utils (1.1.1)
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.14)
+    geocoder (1.4.0)
+    github-linguist (4.8.15)
+      charlock_holmes (~> 0.7.3)
+      escape_utils (~> 1.1.0)
+      mime-types (>= 1.19)
+      rugged (>= 0.23.0b)
+    gitlab (3.7.0)
+      httparty (~> 0.13.0)
+      terminal-table
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
+    json (1.8.3)
+    libv8 (3.16.14.15)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -60,9 +83,17 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.9.1)
+    multi_xml (0.5.5)
+    multipart-post (2.0.0)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    octokit (4.4.1)
+      sawyer (~> 0.7.0, >= 0.5.3)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -93,6 +124,13 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    redis (3.3.1)
+    ref (2.0.0)
+    rugged (0.23.3)
+    sawyer (0.7.0)
+      addressable (>= 2.3.5, < 2.5)
+      faraday (~> 0.8, < 0.10)
+    slop (3.6.0)
     spring (2.0.0)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -105,24 +143,47 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    technologist (0.6.0)
+      nokogiri (~> 1.6)
+      rugged (~> 0.23.3)
+      slop (~> 3.4)
+    terminal-table (1.7.3)
+      unicode-display_width (~> 1.1.1)
+    therubyracer (0.12.2)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    unicode-display_width (1.1.1)
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug
+  dotenv
+  dotenv-deployment
+  geocoder
+  github-linguist
+  gitlab
   listen (~> 3.0.5)
+  octokit
+  pry
   rails (~> 5.0.0, >= 5.0.0.1)
+  redis
+  rugged
   spring
   spring-watcher-listen (~> 2.0.0)
+  technologist
+  therubyracer
   tzinfo-data
+  whenever
 
 BUNDLED WITH
    1.12.5

@@ -1,0 +1,39 @@
+# This is a temporary data source for the salaries, as currently the
+# controllr doesn't have an api to properly get the salaries per month.
+2015:
+  1:
+    - 3368
+    - 59
+  2:
+    - 5588
+    - 66
+  3:
+    - 6508
+    - 68
+  4:
+    - 6772
+    - 69
+  5:
+    - 6540
+    - 74
+  6:
+    - 7888
+    - 66
+  7:
+    - 8959
+    - 76
+  8:
+    - 8476
+    - 73
+  9:
+    - 8995
+    - 86
+  10:
+    - 8727
+    - 73
+  11:
+    - 7142
+    - 81
+  12:
+    - 6119
+    - 65
