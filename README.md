@@ -1,24 +1,55 @@
-# README
+# Panter Public Data Api
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Components used
 
-Things you may want to cover:
+* Redis
+* Panter Controllr
+* Github
+* Gitlab
 
-* Ruby version
+## Setup
 
-* System dependencies
+* Install ruby (`rbenv` recommended)
+* Install redis
+* `cp .env.example .env` and fill in some values (esp. the access tokens)
+* `cp config/salaries.yml.sample config/salaries.yml` and fill in some values
+* `bundle`
+* `rake clone_git_repositories` to have all git repositories locally.
+  alternatively you can rsync the cloned repositories from the production
+  server.
+* `rails s`
 
-* Configuration
+  The server will fetch all data for all modules by default. To only load
+  certain modules the environment variable `MODULES` can be used.
 
-* Database creation
+  Example 1, only load controllr data
 
-* Database initialization
+  `MODULES=controllr rails s`
 
-* How to run the test suite
+  Example 2, skip all data fetching altogether (useful when you already have
+  data fetched previously and want to quickly start the server)
 
-* Services (job queues, cache servers, search engines, etc.)
+  `MODULES= rails s`
 
-* Deployment instructions
+  Example 3, fetch git and controllr data
 
-* ...
+  `MODULES=controllr,git rails s`
+
+## License
+
+Licensed under the [GNU Affero General Public License v3.0](LICENSE)
+
+    Copyright 2016 Panter AG <info@panter.ch>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
