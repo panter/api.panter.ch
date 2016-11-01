@@ -10,6 +10,10 @@ class Configuration
       module_enabled?('git')
     end
 
+    def server_command?
+      %w(server s).include? ENV['RAILS_COMMAND']
+    end
+
     private
 
     def module_enabled?(module_name)

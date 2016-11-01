@@ -39,16 +39,18 @@ Rails.application.configure do
 end
 
 # in development mode we don't rely on the cron jobs
-if !Configuration.git_enabled?
-  puts '--> Skipping git data fetching.'
-else
-  puts '--> Fetching git data...'
-  GitFetcher.new.run
-end
+if Configuration.server_command?
+  if !Configuration.git_enabled?
+    puts '--> Skipping git data fetching.'
+  else
+    puts '--> Fetching git data...'
+    GitFetcher.new.run
+  end
 
-if !Configuration.controllr_enabled?
-  puts '--> Skipping controllr data fetching.'
-else
-  puts '--> Fetching controllr data...'
-  ControllrFetcher.new.run
+  if !Configuration.controllr_enabled?
+    puts '--> Skipping controllr data fetching.'
+  else
+    puts '--> Fetching controllr data...'
+    ControllrFetcher.new.run
+  end
 end

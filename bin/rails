@@ -6,4 +6,9 @@ rescue LoadError => e
 end
 APP_PATH = File.expand_path('../config/application', __dir__)
 require_relative '../config/boot'
+
+# we need to know which command was invoked. see `development.rb` and
+# `DevelopmentConfiguration` for details.
+ENV['RAILS_COMMAND'] = ARGV.first
+
 require 'rails/commands'
