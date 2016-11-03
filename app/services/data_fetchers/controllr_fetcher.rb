@@ -34,15 +34,15 @@ class ControllrFetcher
     DataStore.set(
       'performance',
       {
-        :'last-month' => current_performance,
-        :'second-to-last-month' => previous_performance
+        lastMonth: current_performance,
+        secondToLastMonth: previous_performance
       }
     )
   end
 
   def working_hours
     hours_worked = controllr.hours_worked(Date.today.month, Date.today.year)
-    DataStore.set('hours-worked', :'current-month' => hours_worked)
+    DataStore.set('hoursWorked', currentMonth: hours_worked)
   end
 
   def salaries
@@ -66,7 +66,7 @@ class ControllrFetcher
       }
     end
 
-    DataStore.set('salaries', :'one-year-back' => salaries)
+    DataStore.set('salaries', oneYearBack: salaries)
   end
 
   def average_age
@@ -87,7 +87,7 @@ class ControllrFetcher
     end
 
     DataStore.set(
-      'commute-distances',
+      'commuteDistances',
       {
         shortest: {
           duration: durations.first,
@@ -103,6 +103,6 @@ class ControllrFetcher
 
   def children_per_employee
     children_per_employee = controllr.children_per_employee
-    DataStore.set('children-per-employee', count: children_per_employee);
+    DataStore.set('childrenPerEmployee', count: children_per_employee);
   end
 end

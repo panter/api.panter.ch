@@ -1,12 +1,12 @@
 class CodeController < ApiController
   def attributes
     [
-      :'commits',
-      :'pull-request-comments',
-      :'line-additions',
-      :'line-deletions',
-      :'programming-languages',
-      :'frameworks'
+      :commits,
+      :pullRequestComments,
+      :lineAdditions,
+      :lineDeletions,
+      :programmingLanguages,
+      :frameworks
     ]
   end
 end

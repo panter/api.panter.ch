@@ -22,18 +22,18 @@ class GitFetcher
 
   def pr_comments
     DataStore.set(
-      'pull-request-comments',
+      'pullRequestComments',
       count: github.pull_request_comments_count + gitlab.pull_request_comments_count
     )
   end
 
   def line_changes
     DataStore.set(
-      'line-additions',
+      'lineAdditions',
       count: github.line_changes[:additions] + gitlab.line_changes[:additions],
     )
 
-    DataStore.set('line-deletions',
+    DataStore.set('lineDeletions',
       count: github.line_changes[:deletions] + gitlab.line_changes[:deletions]
     )
   end
@@ -48,7 +48,7 @@ class GitFetcher
       [language, "#{percent}%"]
     end.to_h
 
-    DataStore.set('programming-languages', languages)
+    DataStore.set('programmingLanguages', languages)
   end
 
   def frameworks

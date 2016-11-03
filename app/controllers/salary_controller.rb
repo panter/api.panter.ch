@@ -1,8 +1,8 @@
 class SalaryController < ApiController
   def attributes
     [
-      :'performance',
-      :'salaries'
+      :performance,
+      :salaries
     ]
   end
 end
