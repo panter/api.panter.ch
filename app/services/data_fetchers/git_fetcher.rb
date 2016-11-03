@@ -45,8 +45,8 @@ class GitFetcher
     languages = PercentCalculator.to_percent(languages)
 
     languages = languages.map do |language, percent|
-      [language, "#{percent}%"]
-    end.to_h
+      { name: language, percentage: percent }
+    end
 
     DataStore.set('programmingLanguages', languages)
   end
@@ -58,8 +58,8 @@ class GitFetcher
     frameworks = PercentCalculator.to_percent(frameworks)
 
     frameworks = frameworks.map do |framework, percent|
-      [framework, "#{percent}%"]
-    end.to_h
+      { name: framework, percentage: percent }
+    end
 
     DataStore.set('frameworks', frameworks)
   end
