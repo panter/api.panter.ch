@@ -13,7 +13,7 @@ class DataStore
     end
 
     def redis
-      Redis.new
+      @redis ||= Redis.new
     end
   end
 end
