@@ -13,7 +13,8 @@ gem 'technologist'
 gem 'whenever'
 
 group :development, :test do
-  gem 'pry'
+  gem 'pry-byebug'
+  gem 'pry-rails'
 end
 
 group :development do
