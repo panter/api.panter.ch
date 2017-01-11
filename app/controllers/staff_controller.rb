@@ -6,7 +6,7 @@ class StaffController < ApiController
       :hoursWorked,
       :age,
       :commuteDistances,
-      :childrenPerEmployee,
+      :childrenPerEmployee
     ]
   end
 end
