@@ -84,6 +84,30 @@ class Controllr
       (children_count / employees.length.to_f).round(2)
   end
 
+  def employee_historic_count
+    all_users = fetch('/api/users.json').select { |user| user['employment'] == 'employee' }
+
+    dates = all_users.map do |user|
+      # to simplify checking the date range set the end date if not set
+      exit_date = user['exit_date'] || Date.today.to_s
+      [
+        Date.parse(user['entry_date']),
+        Date.parse(exit_date)
+      ]
+    end
+
+    oldest_date = dates.flatten.compact.sort.first
+
+    (oldest_date..Date.today).select { |date| date.day == 1 }.map do |date|
+      {
+        date: date,
+        count: dates.select do |entry_date, exit_date|
+          (entry_date..exit_date).cover?(date)
+        end.length
+      }
+    end
+  end
+
   private
 
   def user_data(filters = {})
