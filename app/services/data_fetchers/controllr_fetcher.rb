@@ -19,9 +19,10 @@ class ControllrFetcher
 
   def employment
     employees = controllr.employee_count
+    historic_employees = controllr.employee_historic_count
     contractors = controllr.contractor_count
 
-    DataStore.set('employees', count: employees)
+    DataStore.set('employees', count: employees, historicCount: historic_employees)
     DataStore.set('contractors', count: contractors)
   end
 
