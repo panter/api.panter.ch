@@ -1,4 +1,5 @@
 set :job_template, "nice ionice -c3 bash -l -c ':job'"
+set :output, { standard: nil }
 
 every 10.minutes do
   rake 'data:git'
