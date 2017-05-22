@@ -9,6 +9,7 @@ gem 'octokit'
 gem 'panter-rails-deploy'
 gem 'redis'
 gem 'rugged'
+gem 'sentry-raven'
 gem 'technologist'
 gem 'whenever'
 
