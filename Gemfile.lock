@@ -136,6 +136,7 @@ GEM
       pry (>= 0.10.4)
     public_suffix (2.0.5)
     rack (2.0.3)
+    rack-cors (0.4.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.3)
@@ -228,6 +229,7 @@ DEPENDENCIES
   panter-rails-deploy
   pry-byebug
   pry-rails
+  rack-cors
   rails (~> 5.0.0, >= 5.0.0.1)
   redis
   rugged
@@ -239,4 +241,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.14.6
+   1.15.3
