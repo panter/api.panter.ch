@@ -6,7 +6,7 @@ class RootController < ApplicationController
   private
 
   def controller_entries
-    [:code, :staff, :salary].map do |controller|
+    [:code, :staff, :salary, :performance].map do |controller|
       controller_entry(controller)
     end.to_h
   end

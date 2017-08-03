@@ -5,6 +5,7 @@ class ControllrFetcher
 
   def run
     employment
+    all_performance
     current_performance
     working_hours
     salaries
@@ -29,16 +30,37 @@ class ControllrFetcher
   def current_performance
     current_month = Date.today.prev_month.prev_month
     previous_month = current_month.prev_month
+
     previous_performance = controllr.performance(previous_month.month, previous_month.year)
     current_performance = controllr.performance(current_month.month, current_month.year)
 
     DataStore.set(
       'currentPerformance',
       {
-        lastMonth: current_performance,
-        secondToLastMonth: previous_performance
+        lastMonth: current_performance[:performance],
+        secondToLastMonth: previous_performance[:performance]
       }
     )
+  end
+
+  def all_performance
+    date = Date.today.beginning_of_month
+
+    loop do
+      performance = controllr.performance(date.month, date.year)
+
+      break if performance[:hours][:total] == 0
+
+      DataStore.set(
+        "performance_#{date.strftime('%F')}",
+        {
+          startDate: date,
+          endDate: date.end_of_month,
+        }.merge(performance)
+      )
+
+      date = date - 1.month
+    end
   end
 
   def working_hours
