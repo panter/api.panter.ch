@@ -6,12 +6,17 @@ class RootController < ApplicationController
   private
 
   def controller_entries
-    [:code, :staff, :salary, :performance].map do |controller|
-      controller_entry(controller)
+    [
+      :code,
+      :staff,
+      :salary,
+      [:performance, { start_date: '2016-03-01', end_date: '2017-05-01' }]
+    ].map do |controller, params = {}|
+      controller_entry(controller, params)
     end.to_h
   end
 
-  def controller_entry(controller)
-    ["#{controller}_url", url_for(controller: controller, action: :show)]
+  def controller_entry(controller, params)
+    ["#{controller}_url", url_for(controller: controller, action: :show, **params)]
   end
 end
