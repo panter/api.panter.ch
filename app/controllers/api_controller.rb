@@ -1,7 +1,7 @@
 class ApiController < ApplicationController
   def show
-    json = attributes.map do |attribute|
-      [attribute, DataStore.get(attribute)]
+    json = attributes.map do |attribute, datastore_attribute = attribute|
+      [attribute, DataStore.get(datastore_attribute)]
     end.to_h
 
     render json: json

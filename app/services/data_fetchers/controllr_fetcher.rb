@@ -5,7 +5,7 @@ class ControllrFetcher
 
   def run
     employment
-    performance
+    current_performance
     working_hours
     salaries
     average_age
@@ -26,14 +26,14 @@ class ControllrFetcher
     DataStore.set('contractors', count: contractors)
   end
 
-  def performance
+  def current_performance
     current_month = Date.today.prev_month.prev_month
     previous_month = current_month.prev_month
     previous_performance = controllr.performance(previous_month.month, previous_month.year)
     current_performance = controllr.performance(current_month.month, current_month.year)
 
     DataStore.set(
-      'performance',
+      'currentPerformance',
       {
         lastMonth: current_performance,
         secondToLastMonth: previous_performance
