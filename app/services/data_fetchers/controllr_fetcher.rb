@@ -1,4 +1,6 @@
 class ControllrFetcher
+  attr_reader :controllr
+
   def initialize
     @controllr = Controllr.new
   end
@@ -13,10 +15,6 @@ class ControllrFetcher
     commute_distances
     children_per_employee
   end
-
-  private
-
-  attr_reader :controllr
 
   def employment
     employees = controllr.employee_count
