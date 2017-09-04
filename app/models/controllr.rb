@@ -1,6 +1,4 @@
 class Controllr
-  API_ENDPOINT = 'https://controllr.panter.biz'
-
   def employee_count
     user_count('employee')
   end
@@ -147,8 +145,8 @@ class Controllr
   end
 
   def fetch(url, params = {})
-    url = API_ENDPOINT + url
-    params = params.merge(user_token: ENV['CONTROLLR_TOKEN'])
+    url = ENV['CONTROLLR_URL'] + url
+    params = params.merge(user_token: ENV['CONTROLLR_TOKEN'], format: :json)
 
     JsonApi.fetch(url, params)
   end
