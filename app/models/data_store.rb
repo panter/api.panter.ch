@@ -6,7 +6,7 @@ class DataStore
 
     def get(key)
       value = redis.get("dashboard:#{key}")
-      return unless value
+      return if !value || value == 'null'
       JSON.parse(value)
     end
 
