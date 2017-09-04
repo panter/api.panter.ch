@@ -118,6 +118,24 @@ class Controllr
     end
   end
 
+  def salary(month, year)
+    @total_salaries ||= fetch('/accounting_months/total_salaries')
+
+    url = @total_salaries.find { |total_salary| total_salary['year'] == year && total_salary['month'] == month }['monthly_salaries_url']
+
+    salary = fetch(url)
+
+    employees = salary['employees']
+    average_workload = employees.map { |employee| employee['workload'] }.sum / employees.count.to_f
+
+    {
+      month: month,
+      year: year,
+      salary: (salary['totals']['salary_gross'] * average_workload).round,
+      workload: (average_workload * 100).round
+    }
+  end
+
   private
 
   def user_data(filters = {})

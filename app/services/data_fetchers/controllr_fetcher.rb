@@ -67,8 +67,6 @@ class ControllrFetcher
   end
 
   def salaries
-    years_salaries = YAML.load_file(Rails.root.join('config/salaries.yml'))
-
     to_month = Date.today.prev_month.prev_month
     # get the first day of the month to be able to properly iterate
     # (see iteration comment below)
@@ -78,13 +76,12 @@ class ControllrFetcher
     months = (from_month..to_month).select { |month| month.day == 1 }
 
     salaries = months.map do |month|
-      salary, workload = years_salaries[month.year][month.month]
-      {
-        month: month.month,
-        year: month.year,
-        salary: salary,
-        workload: workload
-      }
+      data_store_key = "salary_#{month.strftime('%F')}"
+      # store the per-month entries as well, but store them only when the entry
+      # does not exist yet
+      DataStore.get_or_set(data_store_key) do
+        controllr.salary(month.month, month.year)
+      end
     end
 
     DataStore.set('salaries', oneYearBack: salaries)
