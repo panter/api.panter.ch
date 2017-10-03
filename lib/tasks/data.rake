@@ -12,13 +12,6 @@ namespace :data do
     ControllrFetcher.new.run
   end
 
-  namespace :controllr do
-    desc 'Retrieves the salary data'
-    task salaries: :environment do
-      ControllrFetcher.new.salaries
-    end
-  end
-
   desc 'Clears all the data'
   task clear: :environment do
     DataStore.clear
