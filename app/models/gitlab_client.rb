@@ -20,7 +20,7 @@ class GitlabClient
   def projects
     @projects ||=
       begin
-        projects = paginate(:projects, options: { scope: :owned })
+        projects = paginate(:projects, options: { scope: :all })
 
         # exclude projects without proper repositories
         projects
