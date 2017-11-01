@@ -78,9 +78,7 @@ class Github
           repositories += last_response.data
         end
 
-        # `merge_requests_enabled` seems equivalent to if a repository exists
         repositories
-          .select { |repository| repository.merge_requests_enabled }
           .reject { |repository| REPOSITORY_BLACKLIST.include?(repository.full_name) }
           .reject { |project| ProjectFilter.deprecated?(project) }
       end
