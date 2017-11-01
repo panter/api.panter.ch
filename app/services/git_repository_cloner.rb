@@ -33,32 +33,36 @@ class GitRepositoryCloner
     )
 
     repositories.each do |repository|
-      target_directory = File.join(Configuration::GIT_REPOSITORY_DIRECTORY, repository.name)
-      remote_url = repository.send(clone_url_method)
+      begin
+        target_directory = File.join(Configuration::GIT_REPOSITORY_DIRECTORY, repository.name)
+        remote_url = repository.send(clone_url_method)
 
-      if Dir.exist?(target_directory)
-        local_repository = Rugged::Repository.new(target_directory)
-        origin = local_repository.remotes.find { |remote| remote.name == 'origin' }
+        if Dir.exist?(target_directory)
+          local_repository = Rugged::Repository.new(target_directory)
+          origin = local_repository.remotes.find { |remote| remote.name == 'origin' }
 
-        # make sure we don't mix up github and gitlab repositories
-        # (this may be the case when e.g. a github repo is transferred
-        # to gitlab, while the github repository is left in place. in
-        # this scenario, we may be trying to fetch with the wrong
-        # credentials)
-        if origin && origin.url == remote_url
-          puts "Updating #{repository.name}"
-          local_repository.fetch('origin', credentials: credentials)
+          # make sure we don't mix up github and gitlab repositories
+          # (this may be the case when e.g. a github repo is transferred
+          # to gitlab, while the github repository is left in place. in
+          # this scenario, we may be trying to fetch with the wrong
+          # credentials)
+          if origin && origin.url == remote_url
+            puts "Updating #{repository.name}"
+            local_repository.fetch('origin', credentials: credentials)
+          else
+            $stderr.puts "--> Not updating #{repository.html_url}, we have the wrong remote (#{remote_url})."
+          end
         else
-          $stderr.puts "Not updating #{repository.name}, we have the wrong remote (#{remote_url})."
+          puts "Cloning #{repository.name}"
+          Rugged::Repository.clone_at(
+            remote_url,
+            target_directory,
+            bare: true,
+            credentials: credentials
+          )
         end
-      else
-        puts "Cloning #{repository.name}"
-        Rugged::Repository.clone_at(
-          remote_url,
-          target_directory,
-          bare: true,
-          credentials: credentials
-        )
+      rescue => e
+        $stderr.puts "--> Cloning / Updating of #{repository.html_url} Failed: #{e}"
       end
     end
   end
