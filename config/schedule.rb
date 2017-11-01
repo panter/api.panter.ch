@@ -1,5 +1,5 @@
 set :job_template, "nice ionice -c3 bash -l -c ':job'"
-set :output, { standard: nil }
+set :output, { standard: nil, error: 'log/cron.stderr.log' }
 
 every 10.minutes do
   rake 'data:git'
