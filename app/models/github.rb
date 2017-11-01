@@ -78,7 +78,9 @@ class Github
           repositories += last_response.data
         end
 
-        repositories.reject { |repository| REPOSITORY_BLACKLIST.include?(repository.full_name) }
+        repositories
+          .reject { |repository| REPOSITORY_BLACKLIST.include?(repository.full_name) }
+          .reject { |project| ProjectFilter.deprecated?(project) }
       end
   end
 

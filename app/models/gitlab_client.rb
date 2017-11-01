@@ -26,6 +26,7 @@ class GitlabClient
         projects
           .select { |project| project.default_branch }
           .reject { |project| REPOSITORY_BLACKLIST.include?(project.path_with_namespace) }
+          .reject { |project| ProjectFilter.deprecated?(project) }
       end
   end
 
