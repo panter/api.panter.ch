@@ -50,7 +50,7 @@ class GitRepositoryCloner
             puts "Updating #{repository.name}"
             local_repository.fetch('origin', credentials: credentials)
           else
-            $stderr.puts "--> Not updating #{repository.html_url}, we have the wrong remote (#{remote_url})."
+            $stderr.puts "--> Not updating #{repository.name}, we have the wrong remote (#{remote_url})."
           end
         else
           puts "Cloning #{repository.name}"
@@ -62,7 +62,7 @@ class GitRepositoryCloner
           )
         end
       rescue => e
-        $stderr.puts "--> Cloning / Updating of #{repository.html_url} Failed: #{e}"
+        $stderr.puts "--> Cloning / Updating of #{repository.name} Failed: #{e}"
       end
     end
   end

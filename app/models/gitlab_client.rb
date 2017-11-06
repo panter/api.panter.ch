@@ -23,8 +23,9 @@ class GitlabClient
         projects = paginate(:projects, options: { scope: :all })
 
         # exclude projects without proper repositories
+        # `merge_requests_enabled` seems equivalent to if a repository exists
         projects
-          .select { |project| project.default_branch }
+          .select { |project| project.merge_requests_enabled }
           .reject { |project| REPOSITORY_BLACKLIST.include?(project.path_with_namespace) }
           .reject { |project| ProjectFilter.deprecated?(project) }
       end
