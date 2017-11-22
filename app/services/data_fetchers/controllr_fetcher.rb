@@ -71,7 +71,7 @@ class ControllrFetcher
     # get the first day of the month to be able to properly iterate
     # (see iteration comment below)
     to_month = Date.new(to_month.year, to_month.month, 1)
-    from_month = to_month << 11
+    from_month = to_month << (24 - 1)
     # select the first day only, otherwise the iteration includes every day
     months = (from_month..to_month).select { |month| month.day == 1 }
 
@@ -84,7 +84,7 @@ class ControllrFetcher
       end
     end
 
-    DataStore.set('salaries', oneYearBack: salaries)
+    DataStore.set('salaries', oneYearBack: salaries.drop(12), twoYearsBack: salaries)
   end
 
   def average_age
