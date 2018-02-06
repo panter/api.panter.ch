@@ -32,15 +32,16 @@ class Controllr
     hours = {
       billable: data_totals['internal_hours_billable'].to_f,
       nonBillable: hours_worked - data_totals['internal_hours_billable'].to_f,
-      neutral: data_totals['internal_hours_holidays'].to_f,
+      holidays: data_totals['internal_hours_holidays'].to_f,
+      neutral: data_totals['internal_hours_performance_neutral'].to_f,
       total: data_totals['monthly_total_hours'].to_f
     }
 
-    performance = hours[:billable] / hours_worked
+    performance = data['calculations']['performance'].round(2)
 
     {
       hours: hours,
-      performance: performance.round(2)
+      performance: performance
     }
   end
 
