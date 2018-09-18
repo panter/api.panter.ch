@@ -61,7 +61,7 @@ class Controllr
   def commute_durations
     user_addresses.map { |address|
       PublicTransport.connection_duration(address, office_address)
-    }.sort
+    }.compact.sort
   end
 
   def office_address
