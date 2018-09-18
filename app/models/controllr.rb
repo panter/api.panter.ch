@@ -55,7 +55,7 @@ class Controllr
 
     user_addresses.map { |address|
       Geocoder::Calculations.distance_between(address, office_address)
-    }.sort
+    }.reject(&:nan?).sort
   end
 
   def commute_durations
