@@ -8,12 +8,12 @@ class Controllr
   end
 
   def user_count(employment)
-    data = user_data(employment: employment)
+    data = active_users(employment: employment)
     data.length
   end
 
   def average_age
-    data = user_data(employment: 'employee')
+    data = active_employees
 
     ages = data.map { |user|
       date_of_birth = Date.parse(user['date_of_birth'])
@@ -75,7 +75,7 @@ class Controllr
   end
 
   def children_per_employee
-    employees = user_data(employment: 'employee')
+    employees = active_employees
 
     children_count = employees
       .map { |user|
@@ -95,9 +95,9 @@ class Controllr
   end
 
   def employee_historic_count
-    all_users = fetch('/api/users.json').select { |user| user['employment'] == 'employee' }
+    all_employees = employees
 
-    dates = all_users.map do |user|
+    dates = all_employees.map do |user|
       # to simplify checking the date range set the end date if not set
       exit_date = user['exit_date'] || Date.today.to_s
       [
@@ -138,21 +138,32 @@ class Controllr
 
   private
 
-  def user_data(filters = {})
-    @user_data ||=
-      begin
-        fetch('/api/users.json').select { |user| user['active'] }
-      end
+  def users(filters = {})
+    @users ||= fetch('/api/users.json')
 
-    filters.inject(@user_data) do |user_data, filter|
-      user_data = user_data.select { |user| user[filter[0].to_s] == filter[1] }
+    filters.inject(@users) do |users, filter|
+      users = users.select { |user| user[filter[0].to_s] == filter[1] }
     end
+  end
+
+  def active_users(filters = {})
+    users(filters.merge(active: true))
+  end
+
+  def employees
+    users(employment: 'employee')
+      .select { |user| user['entry_date'] } # some users aren't real employees...
+  end
+
+  def active_employees
+    active_users(employment: 'employee')
+      .select { |user| user['entry_date'] } # some users aren't real employees...
   end
 
   def user_addresses
     @user_addresses ||=
       begin
-        user_data(employment: 'employee')
+        active_employees
           .map { |user|
             if user['address']
               user['address'].gsub(/[\n\r]+/, ', ')
