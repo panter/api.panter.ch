@@ -1,15 +1,10 @@
 class Controllr
   def employee_count
-    user_count('employee')
+    active_employees.count
   end
 
   def contractor_count
-    user_count('external')
-  end
-
-  def user_count(employment)
-    data = active_users(employment: employment)
-    data.length
+    active_contractors.count
   end
 
   def average_age
@@ -158,6 +153,10 @@ class Controllr
   def active_employees
     active_users(employment: 'employee')
       .select { |user| user['entry_date'] } # some users aren't real employees...
+  end
+
+  def active_contractors
+    active_users(employment: 'external')
   end
 
   def user_addresses
