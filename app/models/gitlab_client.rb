@@ -1,13 +1,3 @@
-# Monkeypatch the gitlab gem to add support for the endpoint
-# http://doc.gitlab.com/ce/api/notes.html#list-all-merge-request-notes
-class Gitlab::Client
-  module Notes
-    def merge_request_notes(project, merge_request, options={})
-      get("/projects/#{project}/merge_requests/#{merge_request}/notes", :query => options)
-    end
-  end
-end
-
 class GitlabClient
   # some repositories exist on github as well.
   REPOSITORY_BLACKLIST = (ENV['GITLAB_REPO_BLACKLIST'] || '').split(',')
@@ -106,7 +96,7 @@ class GitlabClient
           merge_requests.each do |merge_request|
             comments += paginate(
               :merge_request_notes,
-              args: [project.id, merge_request.id],
+              args: [project.id, merge_request.iid],
               select_condition: -> (comment) {
                 !comment.system &&
                 Date.parse(comment.created_at) == Date.today
