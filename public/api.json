@@ -1,0 +1,531 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Panter API",
+    "description": "All publicly available data of the company Panter AG",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Code"
+    },
+    {
+      "name": "Performance"
+    },
+    {
+      "name": "Salary"
+    },
+    {
+      "name": "Staff"
+    }
+  ],
+  "paths": {
+    "/code": {
+      "get": {
+        "description": "The code endpoint returns data related to development.",
+        "summary": "GET code",
+        "operationId": "CodeShow",
+        "tags": [
+          "Code"
+        ],
+        "responses": {
+          "success": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "commits": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": "4"
+                        }
+                      },
+                      "required": [
+                        "count"
+                      ]
+                    },
+                    "pullRequestComments": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": "2"
+                        }
+                      },
+                      "required": [
+                        "count"
+                      ]
+                    },
+                    "lineAdditions": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": "32"
+                        }
+                      },
+                      "required": [
+                        "count"
+                      ]
+                    },
+                    "lineDeletions": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": "20"
+                        }
+                      },
+                      "required": [
+                        "count"
+                      ]
+                    },
+                    "programmingLanguages": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "JavaScript"
+                          },
+                          "percentage": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 36.86
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "percentage"
+                        ]
+                      }
+                    },
+                    "frameworks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "Rails"
+                          },
+                          "percentage": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 37.87
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "percentage"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "commits",
+                    "pullRequestComments",
+                    "lineAdditions",
+                    "lineDeletions",
+                    "programmingLanguages",
+                    "frameworks"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/performance": {
+      "get": {
+        "description": "The performance endpoint returns data related to the performance.",
+        "summary": "GET performance",
+        "operationId": "PerformanceShow",
+        "tags": [
+          "Performance"
+        ],
+        "parameters": [
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "date",
+              "default": "&lt;CURRENT YEAR&gt;-01-01",
+              "example": "2016-03-01"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "date",
+              "default": "&lt;CURRENT YEAR&gt;-12-31",
+              "example": "2017-05-01"
+            }
+          }
+        ],
+        "responses": {
+          "success": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "performance": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "startDate": {
+                            "type": "string",
+                            "example": "2016-03-01"
+                          },
+                          "endDate": {
+                            "type": "string",
+                            "example": "2016-03-31"
+                          },
+                          "hours": {
+                            "type": "object",
+                            "properties": {
+                              "billable": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 2404.2
+                              },
+                              "nonBillable": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 885.5
+                              },
+                              "neutral": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 187
+                              },
+                              "total": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 3476.7
+                              }
+                            },
+                            "required": [
+                              "billable",
+                              "nonBillable",
+                              "neutral",
+                              "total"
+                            ]
+                          },
+                          "performance": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0.73
+                          }
+                        },
+                        "required": [
+                          "startDate",
+                          "endDate",
+                          "hours",
+                          "performance"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "performance"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/salary": {
+      "get": {
+        "description": "The salary endpoint returns data related to the salary.",
+        "summary": "GET salary",
+        "operationId": "SalaryShow",
+        "tags": [
+          "Salary"
+        ],
+        "responses": {
+          "success": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "performance": {
+                      "type": "object",
+                      "properties": {
+                        "lastMonth": {
+                          "type": "number",
+                          "format": "float",
+                          "example": 0.69,
+                          "description": "The performance of the last but one month (i.e. current month - 2)"
+                        },
+                        "secondToLastMonth": {
+                          "type": "number",
+                          "format": "float",
+                          "example": 0.59,
+                          "description": "The performance of the last but two month (i.e. current month - 3)"
+                        }
+                      },
+                      "required": [
+                        "lastMonth",
+                        "secondToLastMonth"
+                      ]
+                    },
+                    "salaries": {
+                      "type": "object",
+                      "properties": {
+                        "oneYearBack": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "month": {
+                                "type": "integer",
+                                "example": 8
+                              },
+                              "year": {
+                                "type": "integer",
+                                "example": 2017
+                              },
+                              "salary": {
+                                "type": "integer",
+                                "example": 6898
+                              },
+                              "workload": {
+                                "type": "integer",
+                                "example": 69,
+                                "description": "The average workload in percent"
+                              }
+                            },
+                            "required": [
+                              "month",
+                              "year",
+                              "salary",
+                              "workload"
+                            ]
+                          }
+                        },
+                        "twoYearsBack": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "month": {
+                                "type": "integer",
+                                "example": 8
+                              },
+                              "year": {
+                                "type": "integer",
+                                "example": 2016
+                              },
+                              "salary": {
+                                "type": "integer",
+                                "example": 7943,
+                                "description": "The average salary in CHF"
+                              },
+                              "workload": {
+                                "type": "integer",
+                                "example": 82,
+                                "description": "The average workload in percent"
+                              }
+                            },
+                            "required": [
+                              "month",
+                              "year",
+                              "salary",
+                              "workload"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "oneYearBack",
+                        "twoYearsBack"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "performance",
+                    "salaries"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/staff": {
+      "get": {
+        "description": "The staff endpoint returns data related to employment and staffing.",
+        "summary": "GET staff",
+        "operationId": "StaffShow",
+        "tags": [
+          "Staff"
+        ],
+        "responses": {
+          "success": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "employees": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 45
+                        },
+                        "historicCount": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "date": {
+                                "type": "string",
+                                "example": "2006-06-01"
+                              },
+                              "count": {
+                                "type": "integer",
+                                "example": 1
+                              }
+                            },
+                            "required": [
+                              "date",
+                              "count"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "count",
+                        "historicCount"
+                      ]
+                    },
+                    "contractors": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 37
+                        }
+                      },
+                      "required": [
+                        "count"
+                      ]
+                    },
+                    "hoursWorked": {
+                      "type": "object",
+                      "properties": {
+                        "currentMonth": {
+                          "type": "integer",
+                          "example": 2220
+                        }
+                      },
+                      "required": [
+                        "currentMonth"
+                      ]
+                    },
+                    "age": {
+                      "type": "object",
+                      "properties": {
+                        "average": {
+                          "type": "integer",
+                          "example": 34
+                        }
+                      },
+                      "required": [
+                        "average"
+                      ]
+                    },
+                    "commuteDistances": {
+                      "type": "object",
+                      "properties": {
+                        "shortest": {
+                          "type": "object",
+                          "properties": {
+                            "duration": {
+                              "type": "string",
+                              "example": "13min"
+                            },
+                            "distance": {
+                              "type": "string",
+                              "example": "0.9km"
+                            }
+                          },
+                          "required": [
+                            "duration",
+                            "distance"
+                          ]
+                        },
+                        "longest": {
+                          "type": "object",
+                          "properties": {
+                            "duration": {
+                              "type": "string",
+                              "example": "2.85h"
+                            },
+                            "distance": {
+                              "type": "string",
+                              "example": "135.3km"
+                            }
+                          },
+                          "required": [
+                            "duration",
+                            "distance"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "shortest",
+                        "longest"
+                      ]
+                    },
+                    "childrenPerEmployee": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "number",
+                          "format": "float",
+                          "example": 0.67
+                        }
+                      },
+                      "required": [
+                        "count"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "employees",
+                    "contractors",
+                    "hoursWorked",
+                    "age",
+                    "commuteDistances",
+                    "childrenPerEmployee"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

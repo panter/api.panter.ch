@@ -13,6 +13,7 @@ gem 'rugged'
 gem 'sentry-raven'
 gem 'technologist'
 gem 'whenever'
+gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 
 group :development, :test do
   gem 'pry-byebug'
