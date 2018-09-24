@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.10.0'
+lock '~> 3.11'
 
 set :application, 'api.panter.ch'
 set :repo_url, 'git@github.com:panter/api.panter.ch.git'
