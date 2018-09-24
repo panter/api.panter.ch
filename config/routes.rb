@@ -3,6 +3,4 @@ Rails.application.routes.draw do
   resource :staff, only: [:show], controller: 'staff'
   resource :salary, only: [:show], controller: 'salary'
   resource :performance, only: [:show], controller: 'performance'
-
-  root 'root#index'
 end

@@ -33,6 +33,16 @@
 
   `MODULES=controllr,git rails s`
 
+## Swagger API Doc
+
+Whenever an endpoint is updated or a new one is added the swagger docs need to
+be updated as well. [ZRO: OpenApi 3 JSON-Doc Generator for
+Rails](https://github.com/zhandao/zero-rails_openapi) is used for this.
+
+After updating the definition in the respective controller the task `rake doc`
+generates the Swagger definition in `public/api.json`. This file should be
+checked in to Git as well.
+
 ## License
 
 Licensed under the [GNU Affero General Public License v3.0](LICENSE)
