@@ -32,7 +32,7 @@ class Controllr
       total: data_totals['monthly_total_hours'].to_f
     }
 
-    performance = data['calculations']['performance'].round(2)
+    performance = data['calculations']['performance'].to_f.round(2)
 
     {
       hours: hours,
